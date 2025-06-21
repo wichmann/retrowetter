@@ -176,6 +176,17 @@ def prepare_map(container, selected_station_data):
     container.map(selected_station_data, latitude='geoBreite', longitude='geoLaenge', zoom=7, use_container_width=True)
 
 
+def prepare_yearly_median(container, daily_measurements):
+    container.header('📊 Yearly Median')
+    # calculate the yearly median for the daily measurements
+    daily_measurements['year'] = daily_measurements.index.year
+    yearly_median = daily_measurements.groupby('year')['TMK'].median().rename('yearly_median')
+    # create a line chart for the yearly median
+    container.line_chart(yearly_median, x_label='Years', y_label='Temperature °C', use_container_width=True)
+    with container.expander('Raw data'):
+        st.dataframe(yearly_median.reset_index(), use_container_width=True)
+
+
 def main():
     st.set_page_config(
         page_title='',
@@ -194,6 +205,7 @@ def main():
     prepare_todays_measurements(maincol1, daily_measurements, selected_date)
     prepare_map(maincol1, selected_station_data)
     prepare_this_day_over_years(maincol2, daily_measurements, selected_date)
+    prepare_yearly_median(maincol2, daily_measurements)
     prepare_heat_days(maincol2, daily_measurements, year_range)
 
 
