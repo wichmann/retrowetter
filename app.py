@@ -1,11 +1,19 @@
 
+"""
+A simple Streamlit app to visualize climate data provided by the DWD (Deutscher
+Wetterdienst).
+
+This app allows users to select a weather station, view daily measurements, and
+analyze heat days and specific dates over the years.
+"""
+
 import pandas as pd
 import streamlit as st
 
 import dwd_provider
 
 
-APP_TITLE = 'Climate Telescope'
+APP_TITLE = 'RetroWetter'
 
 
 @st.cache_data
@@ -141,7 +149,6 @@ def prepare_this_day_over_years(container, daily_measurements, selected_date):
     container.header('📈 One day over the years')
     # extract only necessary columns from daily measurements
     this_day_in_year_measurements = daily_measurements[['TNK', 'TMK', 'TXK']]
-    print(this_day_in_year_measurements.head())
     # filter the daily measurements data based on the selected date
     this_day_in_year_measurements = this_day_in_year_measurements[(daily_measurements.index.month == selected_date.month) & (daily_measurements.index.day == selected_date.day)]
     #if this_day_in_year_measurements.empty:
@@ -153,14 +160,11 @@ def prepare_this_day_over_years(container, daily_measurements, selected_date):
         ' TXK': 'Tagesmaximum'
     }
     this_day_in_year_measurements= this_day_in_year_measurements.rename(columns=xx)
-    print(this_day_in_year_measurements.head())
-
     # create a line chart for the selected date
     container.line_chart(this_day_in_year_measurements[['TNK', 'TMK', 'TXK']],
                          x_label='Years', y_label='Temperature °C',
                          # ('Minimaltemperatur °C', 'Mittlere Temperatur °C', 'Maximaltemperatur °C')
                          color= ('#ff0', '#00f', '#f00'), use_container_width=True)
-
     with container.expander('Raw data'):
         # display the daily measurements data as a table
         st.write(f'Measurements for {selected_date.day:02d}.{selected_date.month:02d} over the years')
