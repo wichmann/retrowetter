@@ -97,7 +97,7 @@ msgstr "Tagesmittel der Luftfeuchte"
 
 #: app.py:126
 msgid "Daily average of vapor pressure"
-msgstr "Tagesmittel des Dampfdruckes"
+msgstr "Tagesmittel des Luftdrucks"
 
 #: app.py:141
 msgid "Cloud amount"

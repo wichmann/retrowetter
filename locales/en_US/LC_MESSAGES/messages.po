@@ -97,7 +97,7 @@ msgstr "Daily average of relative humidity"
 
 #: app.py:126
 msgid "Daily average of vapor pressure"
-msgstr "Daily average of vapor pressure"
+msgstr "Daily average of air pressure"
 
 #: app.py:141
 msgid "Cloud amount"
