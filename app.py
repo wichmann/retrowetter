@@ -40,6 +40,12 @@ def get_station_list():
     return station_options
 
 
+@st.cache_data
+def get_station_data(station_id):
+    station_data = dwd_provider.prepare_data(station_id)
+    return station_data
+
+
 def prepare_sidebar():
     # create a sidebar for navigation
     st.sidebar.title(APP_TITLE)
@@ -59,7 +65,7 @@ def prepare_sidebar():
     # get index of the selected station and get measurements for that station
     selected_station_data = station_options[station_options['Stationsname'] == selected_station]
     selected_station_id = selected_station_data[['Stations_id']]['Stations_id'].values[0]
-    daily_measurements = dwd_provider.prepare_data(selected_station_id)
+    daily_measurements = get_station_data(selected_station_id)
 
     # create a double slider to select a range of years
     st.sidebar.subheader(_('Select Year Range'))
