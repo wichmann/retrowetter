@@ -15,3 +15,20 @@ Sources:
  - https://www.dwd.de/DE/leistungen/cdc/cdc_ueberblick-klimadaten.html
  - https://github.com/jdemaeyer/dwdparse
  - Open weather data for humans. (wetterdienst.eobs.org, https://github.com/earthobservations/wetterdienst)
+
+## Build
+Run app for development:
+
+    pipenv run streamlit run app.py
+
+Build Docker container for development:
+
+    docker build -t retrowetter .
+    docker run -p 8501:8501 -d retrowetter
+
+Update and create translation files:
+
+    pipenv run pybabel extract . -o locales/base.pot
+    pybabel init -l de_DE en_US -i locales/base.pot -d locales
+    pybabel compile -d locales
+    pybabel update -i locales/base.pot -d locales

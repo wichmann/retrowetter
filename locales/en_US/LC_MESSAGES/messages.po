@@ -1,0 +1,153 @@
+# English (United States) translations for RetroWetter.
+# Copyright (C) 2025 Christian Wichmann
+# This file is distributed under the same license as the RetroWetter
+# project.
+# Christian Wichmann <wichmann@bbs-brinkstrasse.de>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-22 09:17+0200\n"
+"PO-Revision-Date: 2025-06-22 09:03+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: app.py:22
+msgid "Select language"
+msgstr "Select language"
+
+#: app.py:40
+msgid "This is a simple app to visualize climate data provided by the DWD."
+msgstr "This is a simple app to visualize climate data provided by the DWD."
+
+#: app.py:41
+msgid "Configuration"
+msgstr "Configuration"
+
+#: app.py:44
+msgid "Select Station"
+msgstr "Select Station"
+
+#: app.py:45
+msgid "Select a weather station by name."
+msgstr "Select a weather station by name."
+
+#: app.py:48
+msgid "Select weather station..."
+msgstr "Select weather station..."
+
+#: app.py:59 app.py:62
+msgid "Select Year Range"
+msgstr "Select Year Range"
+
+#: app.py:60
+msgid "Select a year range to view weather data."
+msgstr "Select a year range to view weather data."
+
+#: app.py:70
+msgid "Select Specific Date"
+msgstr "Select Specific Date"
+
+#: app.py:71
+msgid "Select a specific date to view that days weather."
+msgstr "Select a specific date to view that days weather."
+
+#: app.py:73
+msgid "Select Date"
+msgstr "Select Date"
+
+#: app.py:87
+msgid "📅 Some days weather"
+msgstr "📅 Some days weather"
+
+#: app.py:91
+msgid "Daily minimum of air temperature"
+msgstr "Daily minimum of air temperature"
+
+#: app.py:94
+msgid "Daily average of temperature"
+msgstr "Daily average of temperature"
+
+#: app.py:97
+msgid "Daily maximum of air temperature"
+msgstr "Daily maximum of air temperature"
+
+#: app.py:100
+msgid "Daily rainfall"
+msgstr "Daily rainfall"
+
+#: app.py:116
+msgid "Type of Rain"
+msgstr "Type of Rain"
+
+#: app.py:120
+msgid "Daily snow fall"
+msgstr "Daily snow fall"
+
+#: app.py:123
+msgid "Daily average of relative humidity"
+msgstr "Daily average of relative humidity"
+
+#: app.py:126
+msgid "Daily average of vapor pressure"
+msgstr "Daily average of vapor pressure"
+
+#: app.py:141
+msgid "Cloud amount"
+msgstr "Cloud amount"
+
+#: app.py:147
+msgid "🥵 Heat Days per Year"
+msgstr "🥵 Heat Days per Year"
+
+#: app.py:148
+msgid "Heat Days Data (Days with Maximum Temperature >= 30°C)"
+msgstr "Heat Days Data (Days with Maximum Temperature >= 30°C)"
+
+#: app.py:154 app.py:179 app.py:197
+msgid "Raw data"
+msgstr "Raw data"
+
+#: app.py:161
+msgid "📈 One day over the years"
+msgstr "📈 One day over the years"
+
+#: app.py:170
+msgid "Daily minimum"
+msgstr "Daily minimum"
+
+#: app.py:171
+msgid "Daily mean"
+msgstr "Daily mean"
+
+#: app.py:172
+msgid "Daily maximum"
+msgstr "Daily maximum"
+
+#: app.py:177 app.py:196
+msgid "Years"
+msgstr "Years"
+
+#: app.py:177 app.py:196
+msgid "Temperature °C"
+msgstr "Temperature °C"
+
+#: app.py:186
+msgid "📍 Weather station location"
+msgstr "📍 Weather station location"
+
+#: app.py:191
+msgid "📊 Yearly Median"
+msgstr "📊 Yearly Median"
+
+#: app.py:202
+msgid "A simple app to visualize climate data provided by the DWD."
+msgstr "A simple app to visualize climate data provided by the DWD."
+
