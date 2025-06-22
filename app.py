@@ -9,6 +9,7 @@ analyze heat days and specific dates over the years.
 
 import gettext
 
+import babel.core
 import pandas as pd
 import streamlit as st
 
@@ -27,6 +28,10 @@ try:
   _ = localizator.gettext 
 except:
     pass
+
+
+# set up locale for date formatting
+locale = babel.core.Locale.parse(st.context.locale, sep='-')
 
 
 @st.cache_data
@@ -111,21 +116,25 @@ def prepare_todays_measurements(container, daily_measurements, selected_date):
         8: 'Schneeregen',
         9: 'Fehlkennung'
     }
-    if 'RSKF' in todays_measurements and todays_measurements['RSKF'].values[0] != 0:
+    def check_if_value_is_valid(value):
+        return value != 0 and value != -999
+    if 'RSKF' in todays_measurements and check_if_value_is_valid(todays_measurements['RSKF'].values[0]):
         todays_rain_type = todays_measurements['RSKF'].values[0]
         yesterdays_rain_type = yesterdays_measurements['RSKF'].values[0]
         col2.metric(_('Type of Rain'), f'{rain_types[todays_rain_type]}', f'{rain_types[yesterdays_rain_type]}', border=True, delta_color='off')
-    if 'SHK_TAG' in todays_measurements and todays_measurements['SHK_TAG'].values[0] != 0 and todays_measurements['SHK_TAG'].values[0] != -999:
+    if 'SHK_TAG' in todays_measurements and check_if_value_is_valid(todays_measurements['SHK_TAG'].values[0]):
         todays_snow = todays_measurements['SHK_TAG'].values[0]
         yesterdays_snow = yesterdays_measurements['SHK_TAG'].values[0]
         col3.metric(_('Daily snow fall'), f"{todays_snow} cm", f'{todays_snow-yesterdays_snow:.1f} cm', border=True)
-    todays_upm = todays_measurements['UPM'].values[0]
-    yesterdays_upm = yesterdays_measurements['UPM'].values[0]
-    col1.metric(_('Daily average of relative humidity'), f"{todays_upm} %", f'{todays_upm-yesterdays_upm:.1f} %', border=True)
-    todays_vpm = todays_measurements['VPM'].values[0]
-    yesterdays_vpm = yesterdays_measurements['VPM'].values[0]
-    col2.metric(_('Daily average of vapor pressure'), f"{todays_vpm} hPa", f'{todays_vpm-yesterdays_vpm:.1f} hPa', border=True)
-    if 'NM' in todays_measurements and todays_measurements['NM'].values[0] != -999.0:
+    if 'UPM' not in todays_measurements or check_if_value_is_valid(todays_measurements['UPM'].values[0]):
+        todays_upm = todays_measurements['UPM'].values[0]
+        yesterdays_upm = yesterdays_measurements['UPM'].values[0]
+        col1.metric(_('Daily average of relative humidity'), f"{todays_upm} %", f'{todays_upm-yesterdays_upm:.1f} %', border=True)
+    if 'PM' in todays_measurements and check_if_value_is_valid(todays_measurements['PM'].values[0]):
+        todays_vpm = todays_measurements['PM'].values[0]
+        yesterdays_vpm = yesterdays_measurements['PM'].values[0]
+        col2.metric(_('Daily average of vapor pressure'), f"{todays_vpm} hPa", f'{todays_vpm-yesterdays_vpm:.1f} hPa', border=True)
+    if 'NM' in todays_measurements and check_if_value_is_valid(todays_measurements['NM'].values[0]):
         todays_nm = todays_measurements['NM'].values[0]
         yesterdays_nm = yesterdays_measurements['NM'].values[0]
         cloudiness_types = {
