@@ -12,6 +12,7 @@ dash = "*"
 plotly = "*"
 streamlit = "*"
 babel = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 
