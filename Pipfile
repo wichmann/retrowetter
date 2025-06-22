@@ -13,6 +13,8 @@ plotly = "*"
 streamlit = "*"
 babel = "*"
 beautifulsoup4 = "*"
+statsmodels = "*"
+scikit-learn = "*"
 
 [dev-packages]
 

@@ -12,6 +12,9 @@ import gettext
 import babel.core
 import pandas as pd
 import streamlit as st
+import plotly.express as px
+import plotly.graph_objects as go
+from sklearn.linear_model import LinearRegression
 
 import dwd_provider
 
@@ -166,11 +169,41 @@ def prepare_heat_days(container, daily_measurements, year_range):
     # filter the heat days data based on the selected year range
     heat_days = heat_days[(heat_days.index >= year_range[0]) & (heat_days.index <= year_range[1])]
     # create a line chart for heat days
-    container.bar_chart(heat_days, stack='layered', use_container_width=True)
+    fig = create_heat_days_chart(heat_days)
+    container.plotly_chart(fig, use_container_width=True)
     with container.expander(_('Raw data')):
         # display the heat days data as a table
         st.write(f'Heat Days from {year_range[0]} to {year_range[1]}')
         st.dataframe(heat_days.reset_index(), use_container_width=True)
+
+
+def create_heat_days_chart(heat_days):
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=heat_days.index, y=heat_days['heatdays'],
+                        name=_('heat days per year'),
+                        marker_color='indianred'))
+    fig.add_trace(go.Bar(x=heat_days.index, y=heat_days['desertdays'],
+                        name=_('desert days per year'),
+                        marker_color='blue'))
+    fig.add_trace(go.Bar(x=heat_days.index, y=heat_days['tropicalnights'],
+                        name=_('tropical nights per year'),
+                        marker_color='green'))
+    fig.add_trace(go.Scatter(x=heat_days.index, y=create_trend(heat_days, 'heatdays'), mode='lines',
+                             name=_('heat days trend'), marker_color='indianred'))
+    fig.update_layout(xaxis_title=_('Year'), yaxis_title=_('Number of days'),
+                    legend=dict(orientation='h', y=1.1), barmode='overlay')
+    return fig
+
+
+def create_trend(df, column_name):
+    model = LinearRegression()
+    X = df.index.values.reshape(-1, 1)
+    Y = df[[column_name]].values
+    model.fit(X, Y)
+    predicted_y = model.predict(X)
+    #heat_data[f'{column_name}trend'] = model.predict(X)
+    predicted_y = predicted_y.flatten()
+    return predicted_y
 
 
 def prepare_this_day_over_years(container, daily_measurements, selected_date):

@@ -30,5 +30,5 @@ Update and create translation files:
 
     pipenv run pybabel extract . -o locales/base.pot
     pybabel init -l de_DE en_US -i locales/base.pot -d locales
-    pybabel compile -d locales
     pybabel update -i locales/base.pot -d locales
+    pybabel compile -d locales

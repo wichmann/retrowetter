@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-22 09:17+0200\n"
+"POT-Creation-Date: 2025-06-22 13:39+0200\n"
 "PO-Revision-Date: 2025-06-22 06:57+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -19,135 +19,159 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: app.py:22
+#: app.py:27
 msgid "Select language"
 msgstr "Wähle Sprache"
 
-#: app.py:40
+#: app.py:55
 msgid "This is a simple app to visualize climate data provided by the DWD."
 msgstr "Eine einfache App zur Visualisierung von Klimadaten des DWD."
 
-#: app.py:41
+#: app.py:56
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: app.py:44
+#: app.py:59
 msgid "Select Station"
 msgstr "Wetterstation auswählen"
 
-#: app.py:45
+#: app.py:60
 msgid "Select a weather station by name."
 msgstr "Wählen Sie eine Wetterstation aus."
 
-#: app.py:48
+#: app.py:63
 msgid "Select weather station..."
 msgstr "Wählen Sie eine Wetterstation..."
 
-#: app.py:59 app.py:62
+#: app.py:74 app.py:77
 msgid "Select Year Range"
 msgstr "Wählen Sie einen Zeitraum"
 
-#: app.py:60
+#: app.py:75
 msgid "Select a year range to view weather data."
 msgstr "Wählen Sie eine Zeitraum, für den Wetterdaten angezeigt werden sollen."
 
-#: app.py:70
+#: app.py:85
 msgid "Select Specific Date"
 msgstr "Wählen Sie ein bestimmtes Datum"
 
-#: app.py:71
+#: app.py:86
 msgid "Select a specific date to view that days weather."
 msgstr "Wählen Sie ein bestimmtes Datum, für das das Wetter angezeigt werden soll."
 
-#: app.py:73
+#: app.py:88
 msgid "Select Date"
 msgstr "Wähle Datum"
 
-#: app.py:87
+#: app.py:102
 msgid "📅 Some days weather"
 msgstr "📅 Wetter eines bestimmten Tages"
 
-#: app.py:91
+#: app.py:106
 msgid "Daily minimum of air temperature"
 msgstr "Tagesminimum der Lufttemperatur"
 
-#: app.py:94
+#: app.py:109
 msgid "Daily average of temperature"
 msgstr "Tagesmittel der Temperatur"
 
-#: app.py:97
+#: app.py:112
 msgid "Daily maximum of air temperature"
 msgstr "Tagesmaximum der Lufttemperatur"
 
-#: app.py:100
+#: app.py:115
 msgid "Daily rainfall"
 msgstr "Tägliche Niederschlagshöhe"
 
-#: app.py:116
+#: app.py:133
 msgid "Type of Rain"
 msgstr "Niederschlagsform"
 
-#: app.py:120
+#: app.py:137
 msgid "Daily snow fall"
 msgstr "Tägliche Schneehoehe"
 
-#: app.py:123
+#: app.py:141
 msgid "Daily average of relative humidity"
 msgstr "Tagesmittel der Luftfeuchte"
 
-#: app.py:126
+#: app.py:145
 msgid "Daily average of vapor pressure"
 msgstr "Tagesmittel des Luftdrucks"
 
-#: app.py:141
+#: app.py:160
 msgid "Cloud amount"
 msgstr "Bedeckungsgrad"
 
-#: app.py:147
+#: app.py:177
 msgid "🥵 Heat Days per Year"
 msgstr "🥵 Hitzetage pro Jahr"
 
-#: app.py:148
+#: app.py:178
 msgid "Heat Days Data (Days with Maximum Temperature >= 30°C)"
 msgstr "Daten zu Hitzetagen (Tage mit einer maximalen Temperatur >= 30°C)"
 
-#: app.py:154 app.py:179 app.py:197
+#: app.py:186 app.py:229 app.py:247
 msgid "Raw data"
 msgstr "Rohdaten"
 
-#: app.py:161
+#: app.py:195
+msgid "heat days per year"
+msgstr "Hitzetage pro Jahr"
+
+#: app.py:198
+msgid "desert days per year"
+msgstr "Wüstentage pro Jahr"
+
+#: app.py:201
+msgid "tropical nights per year"
+msgstr "Tropische Nächte pro Jahr"
+
+#: app.py:204
+msgid "heat days trend"
+msgstr "Hitzetage (Trend)"
+
+#: app.py:205
+msgid "Year"
+msgstr "Jahre"
+
+#: app.py:205
+msgid "Number of days"
+msgstr "Anzahl Tage/Nächte"
+
+#: app.py:211
 msgid "📈 One day over the years"
 msgstr "📈 Ein Tag durch die Jahre"
 
-#: app.py:170
+#: app.py:220
 msgid "Daily minimum"
 msgstr "Tagesminimum"
 
-#: app.py:171
+#: app.py:221
 msgid "Daily mean"
 msgstr "Tagesmittel"
 
-#: app.py:172
+#: app.py:222
 msgid "Daily maximum"
 msgstr "Tagesmaximum"
 
-#: app.py:177 app.py:196
+#: app.py:227 app.py:246
 msgid "Years"
 msgstr "Jahre"
 
-#: app.py:177 app.py:196
+#: app.py:227 app.py:246
 msgid "Temperature °C"
 msgstr "Temperatur °C"
 
-#: app.py:186
+#: app.py:236
 msgid "📍 Weather station location"
 msgstr "📍 Standort Wetterstation"
 
-#: app.py:191
+#: app.py:241
 msgid "📊 Yearly Median"
 msgstr "📊 Jährlicher Mittelwert"
 
-#: app.py:202
+#: app.py:252
 msgid "A simple app to visualize climate data provided by the DWD."
 msgstr "Eine einfache App zur Visualisierung von Klimadaten des DWD."
 
