@@ -32,3 +32,8 @@ Update and create translation files:
     pybabel init -l de_DE en_US -i locales/base.pot -d locales
     pybabel update -i locales/base.pot -d locales
     pybabel compile -d locales
+
+## Todo
+- Reimplement with Dash (https://dash.plotly.com/minimal-app) to compare with Steamlit.
+- Use Bokeh for plots.
+- Run app directly in browser with PyScript (https://pyscript.com/@examples/bokeh/latest).
