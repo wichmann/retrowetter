@@ -206,6 +206,16 @@ def prepare_yearly_median(container, daily_measurements):
         st.dataframe(yearly_median.reset_index(), use_container_width=True)
 
 
+def prepare_rainfall_in_month_over_the_years(container, daily_measurements, selected_date):
+    container.header(_('🌧️ Rainfall in Month over the Years'))
+    rainfall_in_month = dwd_provider.calculate_rainfall_per_month_over_years(daily_measurements, selected_date.month)
+    container.bar_chart(rainfall_in_month, x_label=_('Years'), y_label=_('Rainfall in Month (mm)'), use_container_width=True)
+    with container.expander(_('Raw data')):
+        # display the daily measurements data as a table
+        st.write(_('Rainfall in Month over the years'))
+        st.dataframe(rainfall_in_month.reset_index(), use_container_width=True)
+
+
 def main():
     about_text = _('A simple app to visualize climate data provided by the DWD.')
     st.set_page_config(
@@ -223,10 +233,11 @@ def main():
     daily_measurements, selected_date, year_range, selected_station_data = prepare_sidebar()
     maincol1, maincol2 = st.columns([1,1], gap='medium')
     prepare_todays_measurements(maincol1, daily_measurements, selected_date)
+    prepare_this_day_over_years(maincol1, daily_measurements, selected_date)
     prepare_map(maincol1, selected_station_data)
-    prepare_this_day_over_years(maincol2, daily_measurements, selected_date)
     prepare_yearly_median(maincol2, daily_measurements)
-    prepare_heat_days(maincol2, daily_measurements, year_range)
+    prepare_heat_days(maincol2, daily_measurements)
+    prepare_rainfall_in_month_over_the_years(maincol2, daily_measurements, selected_date)
 
 
 if __name__ == "__main__":
