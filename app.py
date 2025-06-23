@@ -136,7 +136,7 @@ def prepare_todays_measurements(container, daily_measurements, selected_date):
 def prepare_heat_days(container, daily_measurements):    
     container.header(_('🥵 Heat Days per Year'))
     container.write(_('Heat Days Data (Days with Maximum Temperature >= 30°C)'))
-    heat_days = dwd_provider.count_heat_days_per_year(daily_measurements)
+    heat_days = dwd_provider.calculate_heat_days_per_year(daily_measurements)
     fig = create_heat_days_chart(heat_days)
     container.plotly_chart(fig, use_container_width=True)
     with container.expander(_('Raw data')):

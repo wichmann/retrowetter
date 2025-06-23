@@ -19,6 +19,7 @@ import requests
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -211,7 +212,7 @@ def calculate_measurements_for_today_and_yesterday(daily_measurements, selected_
     return todays_measurements, yesterdays_measurements
 
 
-def count_heat_days_per_year(df):
+def calculate_heat_days_per_year(df):
     """
     Count the number of heat days (days with maximum temperature >= 30°C)
     in the DataFrame.
@@ -227,22 +228,13 @@ def count_heat_days_per_year(df):
     return heat_days_calculations
 
 
-def count_summer_days_per_year(df):
+def calculate_summer_days_per_year(df):
     """
     Count the number of very hot days (days with maximum temperature >= 25°C)
     in the DataFrame.
     """
     df['year'] = df.index.year
     return df[df['TXK'] >= 25].groupby('year').size()
-
-
-def count_tropical_nights_per_year(df):
-    """
-    Count the number of tropical nights (days with minimum temperature >= 20°C)
-    in the DataFrame.
-    """
-    df['year'] = df.index.year
-    return df[df['TNK'] >= 20].groupby('year').size()
 
 
 def calculate_temperatures_for_this_day_over_years(daily_measurements, month, day):
@@ -281,12 +273,11 @@ def calculate_rainfall_per_month_over_years(daily_measurements, month):
 def main():
     daily_measurements = prepare_data(78)
     # count heat days, summer days and tropical nights
-    heat_days = count_heat_days_per_year(daily_measurements)
-    summer_days = count_summer_days_per_year(daily_measurements)
-    tropical_nights = count_tropical_nights_per_year(daily_measurements)
-    
+    heat_days = calculate_heat_days_per_year(daily_measurements)
+    summer_days = calculate_summer_days_per_year(daily_measurements)
     # create diagram of heat days, summer days and tropical nights
-    heat_days.plot(kind='bar', title='Heat Days per Year (TXK >= 30°C)')
+    p = heat_days.plot(kind='bar', title='Heat Days per Year (TXK >= 30°C)')
+    plt.show(block=True)
 
 
 if __name__ == "__main__":
