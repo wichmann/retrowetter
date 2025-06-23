@@ -10,9 +10,7 @@ analyze heat days and specific dates over the years.
 import gettext
 
 import babel.core
-import pandas as pd
 import streamlit as st
-import plotly.express as px
 import plotly.graph_objects as go
 from sklearn.linear_model import LinearRegression
 
@@ -44,7 +42,8 @@ def get_station_list():
 
 
 @st.cache_data
-def get_station_data(station_id):
+def get_station_data(station_data):
+    station_id = station_data[['Stations_id']]['Stations_id'].values[0]
     station_data = dwd_provider.prepare_data(station_id)
     return station_data
 
@@ -55,6 +54,8 @@ def prepare_sidebar():
     st.sidebar.write(_('This is a simple app to visualize climate data provided by the DWD.'))
     st.sidebar.header(_('Configuration'))
 
+
+def prepare_station_selection():
     # create a dropdown to select a station
     st.sidebar.subheader(_('Select Station'))
     st.sidebar.write(_('Select a weather station by name.'))
@@ -64,12 +65,12 @@ def prepare_sidebar():
         options=station_options[['Stationsname']],
         index=10
     )
-
     # get index of the selected station and get measurements for that station
     selected_station_data = station_options[station_options['Stationsname'] == selected_station]
-    selected_station_id = selected_station_data[['Stations_id']]['Stations_id'].values[0]
-    daily_measurements = get_station_data(selected_station_id)
+    return selected_station_data
 
+
+def prepare_time_selection(daily_measurements):
     # create a double slider to select a range of years
     st.sidebar.subheader(_('Select Year Range'))
     st.sidebar.write(_('Select a year range to view weather data.'))
@@ -80,7 +81,6 @@ def prepare_sidebar():
         value=(int(daily_measurements.index.year.min()), int(daily_measurements.index.year.max())),
         step=1
     )
-
     # create input fields to select a specific date  
     st.sidebar.subheader(_('Select Specific Date'))
     st.sidebar.write(_('Select a specific date to view that days weather.'))
@@ -90,8 +90,7 @@ def prepare_sidebar():
         min_value=daily_measurements.index.min().date(),
         max_value=daily_measurements.index.max().date()
     )
-
-    return daily_measurements, selected_date, year_range, selected_station_data
+    return selected_date, year_range
 
 
 def prepare_todays_measurements(container, daily_measurements, selected_date):
@@ -227,8 +226,11 @@ def main():
         }
     )
     st.title(APP_TITLE)
-    # filter out the measurements that are not in the selected year range
-    daily_measurements = daily_measurements[(daily_measurements.index >= year_range[0]) & (daily_measurements.index <= year_range[1])]
+    prepare_sidebar()
+    selected_station_data = prepare_station_selection()
+    daily_measurements = get_station_data(selected_station_data)
+    selected_date, year_range = prepare_time_selection(daily_measurements)
+    daily_measurements = dwd_provider.filter_dataframe_by_year(daily_measurements, year_range[0], year_range[1])
     maincol1, maincol2 = st.columns([1,1], gap='medium')
     prepare_todays_measurements(maincol1, daily_measurements, selected_date)
     prepare_this_day_over_years(maincol1, daily_measurements, selected_date)

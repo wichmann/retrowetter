@@ -163,6 +163,12 @@ def prepare_data(station_id):
     return daily_measurements
 
 
+def filter_dataframe_by_year(daily_measurements, start_year, end_year):
+    # filter out the measurements that are not in the selected year range
+    filtered_data = daily_measurements[(daily_measurements.index.year >= start_year) & (daily_measurements.index.year <= end_year)]
+    return filtered_data
+
+
 def check_if_value_is_valid(value):
     return value != 0 and value != -999
 
@@ -205,13 +211,12 @@ def calculate_measurements_for_today_and_yesterday(daily_measurements, selected_
     return todays_measurements, yesterdays_measurements
 
 
-def count_heat_days_per_year(df, start_year, end_year):
+def count_heat_days_per_year(df):
     """
     Count the number of heat days (days with maximum temperature >= 30°C)
     in the DataFrame.
     """
     df['year'] = df.index.year
-    # df = df[df['TXK'] >= 30].groupby(df['year']).size()
     desertdays_data = df[df['TXK'] >= 35]
     desertdays_data = desertdays_data.groupby('year').size().rename('desertdays')
     heatdays_data = df[df['TXK'] >= 30]
@@ -219,7 +224,6 @@ def count_heat_days_per_year(df, start_year, end_year):
     tropicalnights_data = df[df['TNK'] >= 20]
     tropicalnights_data = tropicalnights_data.groupby('year').size().rename('tropicalnights')
     heat_days_calculations= heatdays_data.to_frame().join(desertdays_data).join(tropicalnights_data).fillna(0)
-    heat_days_calculations = heat_days_calculations[(heat_days_calculations.index >= start_year) & (heat_days_calculations.index <= end_year)]
     return heat_days_calculations
 
 
@@ -258,11 +262,10 @@ def calculate_temperatures_for_this_day_over_years(daily_measurements, month, da
     return this_day_in_year_measurements
 
 
-def calculate_yearly_median(daily_measurements, start_year, end_year):
+def calculate_yearly_median(daily_measurements):
     # calculate the yearly median for the daily measurements
     daily_measurements['year'] = daily_measurements.index.year
     yearly_median = daily_measurements.groupby('year')['TMK'].median().rename('yearly_median')
-    yearly_median = yearly_median[(yearly_median.index >= start_year) & (yearly_median.index <= end_year)]
     return yearly_median
 
 
