@@ -1,7 +1,7 @@
 
 """
-This script downloads and processes climate data from the German Weather
-Service (DWD).
+This module provides functionality to interact with the German Weather Service
+(Deutscher Wetterdienst, DWD).
 
 It retrieves daily and monthly climate data, including station information,
 and provides functions to read and manipulate this data using pandas. It
@@ -163,7 +163,40 @@ def prepare_data(station_id):
     return daily_measurements
 
 
-def count_heat_days_per_year(df):
+def check_if_value_is_valid(value):
+    return value != 0 and value != -999
+
+
+def get_rain_type(value):
+    rain_types = {
+        0: 'kein Niederschlag',
+        1: 'Regen',
+        #2: 'Schnee',
+        #3: 'Graupel',
+        4: 'Regen', #'Unbekannt',
+        #5: 'Eisregen',
+        6: 'Regen',
+        7: 'Schnee',
+        8: 'Schneeregen',
+        9: 'Fehlkennung'
+    }
+    return rain_types.get(value, 'Unbekannt')
+
+
+def get_cloudiness_type(value):
+    cloudiness_types = {
+        0: '☀️',
+        1: '🌤️',
+        2: '🌤️',
+        3: '⛅',
+        4: '⛅',
+        5: '🌥️',
+        6: '🌥️',
+        7: '☁️',
+        8: '☁️'
+    }
+    return cloudiness_types[round(value, 0)]
+
     """
     Count the number of heat days (days with maximum temperature >= 30°C)
     in the DataFrame.

@@ -113,51 +113,28 @@ def prepare_todays_measurements(container, daily_measurements, selected_date):
     todays_rain = todays_measurements['RSK'].values[0]
     yesterdays_rain = yesterdays_measurements['RSK'].values[0]
     col1.metric(_('Daily rainfall'), f"{todays_rain} mm", f'{todays_rain-yesterdays_rain:.1f} mm', border=True)
-    rain_types = {
-        0: 'kein Niederschlag',
-        1: 'Regen',
-        #2: 'Schnee',
-        #3: 'Graupel',
-        4: 'Regen', #'Unbekannt',
-        #5: 'Eisregen',
-        6: 'Regen',
-        7: 'Schnee',
-        8: 'Schneeregen',
-        9: 'Fehlkennung'
-    }
-    def check_if_value_is_valid(value):
-        return value != 0 and value != -999
-    if 'RSKF' in todays_measurements and check_if_value_is_valid(todays_measurements['RSKF'].values[0]):
+    if 'RSKF' in todays_measurements and dwd_provider.check_if_value_is_valid(todays_measurements['RSKF'].values[0]):
         todays_rain_type = todays_measurements['RSKF'].values[0]
         yesterdays_rain_type = yesterdays_measurements['RSKF'].values[0]
-        col2.metric(_('Type of Rain'), f'{rain_types[todays_rain_type]}', f'{rain_types[yesterdays_rain_type]}', border=True, delta_color='off')
-    if 'SHK_TAG' in todays_measurements and check_if_value_is_valid(todays_measurements['SHK_TAG'].values[0]):
+        todays_rain_type_str = f'{dwd_provider.get_rain_type(todays_rain_type)}'
+        yesterdays_rain_type_str = f'{dwd_provider.get_rain_type(yesterdays_rain_type)}'
+        col2.metric(_('Type of Rain'), todays_rain_type_str, yesterdays_rain_type_str, border=True, delta_color='off')
+    if 'SHK_TAG' in todays_measurements and dwd_provider.check_if_value_is_valid(todays_measurements['SHK_TAG'].values[0]):
         todays_snow = todays_measurements['SHK_TAG'].values[0]
         yesterdays_snow = yesterdays_measurements['SHK_TAG'].values[0]
         col3.metric(_('Daily snow fall'), f"{todays_snow} cm", f'{todays_snow-yesterdays_snow:.1f} cm', border=True)
-    if 'UPM' not in todays_measurements or check_if_value_is_valid(todays_measurements['UPM'].values[0]):
+    if 'UPM' not in todays_measurements or dwd_provider.check_if_value_is_valid(todays_measurements['UPM'].values[0]):
         todays_upm = todays_measurements['UPM'].values[0]
         yesterdays_upm = yesterdays_measurements['UPM'].values[0]
         col1.metric(_('Daily average of relative humidity'), f"{todays_upm} %", f'{todays_upm-yesterdays_upm:.1f} %', border=True)
-    if 'PM' in todays_measurements and check_if_value_is_valid(todays_measurements['PM'].values[0]):
+    if 'PM' in todays_measurements and dwd_provider.check_if_value_is_valid(todays_measurements['PM'].values[0]):
         todays_vpm = todays_measurements['PM'].values[0]
         yesterdays_vpm = yesterdays_measurements['PM'].values[0]
         col2.metric(_('Daily average of vapor pressure'), f"{todays_vpm} hPa", f'{todays_vpm-yesterdays_vpm:.1f} hPa', border=True)
-    if 'NM' in todays_measurements and check_if_value_is_valid(todays_measurements['NM'].values[0]):
+    if 'NM' in todays_measurements and dwd_provider.check_if_value_is_valid(todays_measurements['NM'].values[0]):
         todays_nm = todays_measurements['NM'].values[0]
         yesterdays_nm = yesterdays_measurements['NM'].values[0]
-        cloudiness_types = {
-            0: '☀️',
-            1: '🌤️',
-            2: '🌤️',
-            3: '⛅',
-            4: '⛅',
-            5: '🌥️',
-            6: '🌥️',
-            7: '☁️',
-            8: '☁️'
-        }
-        col3.metric(_('Cloud amount'), f"{cloudiness_types[round(todays_nm, 0)]}", f"{cloudiness_types[round(yesterdays_nm, 0)]}", border=True)
+        col3.metric(_('Cloud amount'), f"{dwd_provider.get_cloudiness_type(todays_nm)}", f"{dwd_provider.get_cloudiness_type(yesterdays_nm)}", border=True)
 
 
 def prepare_heat_days(container, daily_measurements, year_range):    
