@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-23 08:53+0200\n"
+"POT-Creation-Date: 2025-06-23 09:18+0200\n"
 "PO-Revision-Date: 2025-06-22 09:03+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -23,9 +23,9 @@ msgstr ""
 msgid "Select language"
 msgstr "Select language"
 
-#: app.py:54
-msgid "This is a simple app to visualize climate data provided by the DWD."
-msgstr "This is a simple app to visualize climate data provided by the DWD."
+#: app.py:54 app.py:216
+msgid "A simple app to visualize weather data to show climate trends."
+msgstr "A simple app to visualize weather data to show climate trends."
 
 #: app.py:55
 msgid "Configuration"
@@ -179,9 +179,36 @@ msgstr "Rainfall in Month (mm)"
 msgid "Rainfall in Month over the years"
 msgstr "Rainfall in Month over the years"
 
-#: app.py:216
-msgid "A simple app to visualize climate data provided by the DWD."
-msgstr "A simple app to visualize climate data provided by the DWD."
+#: app.py:217
+msgid ""
+"The weather and climate data for this app are provided by the Deutscher\n"
+"Wetterdienst (DWD) and contain mainly data for Germany, other locations "
+"may be\n"
+"supported. All spatial data including weather and climate information are"
+"\n"
+"provided under the Creative Commons licence CC BY 4.0 as stated in the\n"
+"[legal "
+"notices](https://www.dwd.de/EN/service/legal_notice/legal_notice.html).\n"
+"More information about the DWD can be found on their "
+"[homepage](https://www.dwd.de/)."
+msgstr ""
+"The weather and climate data for this app are provided by the Deutscher "
+"Wetterdienst (DWD) and contain mainly data for Germany, other locations "
+"may be "
+"supported. All spatial data including weather and climate information are "
+"provided under the Creative Commons licence CC BY 4.0 as stated in the "
+"[legal "
+"notices](https://www.dwd.de/EN/service/legal_notice/legal_notice.html). "
+"More information about the DWD can be found on their "
+"[homepage](https://www.dwd.de/)."
+
+#: app.py:229
+msgid "Source code"
+msgstr "Source code"
+
+#: app.py:230
+msgid "About"
+msgstr "About"
 
 #: dwd_provider.py:249
 msgid "Daily minimum"
@@ -194,4 +221,10 @@ msgstr "Daily mean"
 #: dwd_provider.py:251
 msgid "Daily maximum"
 msgstr "Daily maximum"
+
+#~ msgid "A simple app to visualize climate data provided by the DWD."
+#~ msgstr "A simple app to visualize climate data provided by the DWD."
+
+#~ msgid "This is a simple app to visualize climate data provided by the DWD."
+#~ msgstr "This is a simple app to visualize climate data provided by the DWD."
 

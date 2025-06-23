@@ -51,7 +51,7 @@ def get_station_data(station_data):
 def prepare_sidebar():
     # create a sidebar for navigation
     st.sidebar.title(APP_TITLE)
-    st.sidebar.write(_('This is a simple app to visualize climate data provided by the DWD.'))
+    st.sidebar.write(_('A simple app to visualize weather data to show climate trends.'))
     st.sidebar.header(_('Configuration'))
 
 
@@ -213,16 +213,21 @@ def prepare_rainfall_in_month_over_the_years(container, daily_measurements, sele
 
 
 def main():
-    about_text = _('A simple app to visualize climate data provided by the DWD.')
+    about_text = _('A simple app to visualize weather data to show climate trends.')
+    sources_info = _("""The weather and climate data for this app are provided by the Deutscher
+Wetterdienst (DWD) and contain mainly data for Germany, other locations may be
+supported. All spatial data including weather and climate information are
+provided under the Creative Commons licence CC BY 4.0 as stated in the
+[legal notices](https://www.dwd.de/EN/service/legal_notice/legal_notice.html).
+More information about the DWD can be found on their [homepage](https://www.dwd.de/).""")
     st.set_page_config(
         page_title='',
         page_icon='☀️',
         layout='wide',
         initial_sidebar_state='expanded',
         menu_items={
-            #'Get Help': 'https://www.extremelycoolapp.com/help',
-            #'Report a bug': "https://www.extremelycoolapp.com/bug",
-            'About': f'# {APP_TITLE}\n{about_text}'
+            'Report a bug': 'https://github.com/wichmann/retrowetter',
+            'About': f'# {APP_TITLE}\n{about_text}\n\n{sources_info}'
         }
     )
     st.title(APP_TITLE)
