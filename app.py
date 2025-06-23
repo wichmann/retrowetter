@@ -95,10 +95,7 @@ def prepare_sidebar():
 
 
 def prepare_todays_measurements(container, daily_measurements, selected_date):
-    # filter the daily measurements data based on the selected date
-    todays_measurements = daily_measurements[daily_measurements.index.date == selected_date]
-    yesterdays_measurements = daily_measurements[daily_measurements.index.date == selected_date - pd.Timedelta(days=1)]
-    # display the daily measurements data
+    todays_measurements, yesterdays_measurements = dwd_provider.calculate_measurements_for_today_and_yesterday(daily_measurements, selected_date)
     container.header(_('📅 Some days weather'))
     col1, col2, col3 = container.columns(3)
     todays_minimum = todays_measurements['TNK'].values[0]
@@ -230,7 +227,8 @@ def main():
         }
     )
     st.title(APP_TITLE)
-    daily_measurements, selected_date, year_range, selected_station_data = prepare_sidebar()
+    # filter out the measurements that are not in the selected year range
+    daily_measurements = daily_measurements[(daily_measurements.index >= year_range[0]) & (daily_measurements.index <= year_range[1])]
     maincol1, maincol2 = st.columns([1,1], gap='medium')
     prepare_todays_measurements(maincol1, daily_measurements, selected_date)
     prepare_this_day_over_years(maincol1, daily_measurements, selected_date)
