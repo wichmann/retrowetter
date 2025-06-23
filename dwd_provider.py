@@ -266,6 +266,14 @@ def calculate_yearly_median(daily_measurements, start_year, end_year):
     return yearly_median
 
 
+def calculate_rainfall_per_month_over_years(daily_measurements, month):
+    # extract only necessary columns from daily measurements
+    rainfall_in_month = daily_measurements[['RSK']]
+    # filter the daily measurements data based on the selected date
+    rainfall_in_month = rainfall_in_month[(daily_measurements.index.month == month)]
+    rainfall_in_month = rainfall_in_month.groupby(rainfall_in_month.index.year).sum() #.rename('rainfall_in_month')
+    return rainfall_in_month
+
 
 def main():
     daily_measurements = prepare_data(78)
