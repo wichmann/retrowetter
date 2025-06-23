@@ -137,20 +137,15 @@ def prepare_todays_measurements(container, daily_measurements, selected_date):
         col3.metric(_('Cloud amount'), f"{dwd_provider.get_cloudiness_type(todays_nm)}", f"{dwd_provider.get_cloudiness_type(yesterdays_nm)}", border=True)
 
 
-def prepare_heat_days(container, daily_measurements, year_range):    
-    heat_days = dwd_provider.count_heat_days_per_year(daily_measurements)
-    # display the heat days data
+def prepare_heat_days(container, daily_measurements):    
     container.header(_('🥵 Heat Days per Year'))
     container.write(_('Heat Days Data (Days with Maximum Temperature >= 30°C)'))
-
-    # filter the heat days data based on the selected year range
-    heat_days = heat_days[(heat_days.index >= year_range[0]) & (heat_days.index <= year_range[1])]
-    # create a line chart for heat days
+    heat_days = dwd_provider.count_heat_days_per_year(daily_measurements)
     fig = create_heat_days_chart(heat_days)
     container.plotly_chart(fig, use_container_width=True)
     with container.expander(_('Raw data')):
         # display the heat days data as a table
-        st.write(f'Heat Days from {year_range[0]} to {year_range[1]}')
+        st.write(_('Heat Days, Desert Days and Tropical Nights per Year'))
         st.dataframe(heat_days.reset_index(), use_container_width=True)
 
 
@@ -185,21 +180,9 @@ def create_trend(df, column_name):
 
 def prepare_this_day_over_years(container, daily_measurements, selected_date):
     container.header(_('📈 One day over the years'))
-    # extract only necessary columns from daily measurements
-    this_day_in_year_measurements = daily_measurements[['TNK', 'TMK', 'TXK']]
-    # filter the daily measurements data based on the selected date
-    this_day_in_year_measurements = this_day_in_year_measurements[(daily_measurements.index.month == selected_date.month) & (daily_measurements.index.day == selected_date.day)]
-    #if this_day_in_year_measurements.empty:
-    #    container.write(f'No data available for {selected_date}.')
-    #    return
-    xx = {
-        ' TNK': _('Daily minimum'),
-        ' TMK': _('Daily mean'),
-        ' TXK': _('Daily maximum')
-    }
-    this_day_in_year_measurements= this_day_in_year_measurements.rename(columns=xx)
+    this_day_in_year_measurements = dwd_provider.calculate_temperatures_for_this_day_over_years(daily_measurements, selected_date.month, selected_date.day)
     # create a line chart for the selected date
-    container.line_chart(this_day_in_year_measurements[['TNK', 'TMK', 'TXK']],
+    container.line_chart(this_day_in_year_measurements,
                          x_label=_('Years'), y_label=_('Temperature °C'),
                          color= ('#ff0', '#00f', '#f00'), use_container_width=True)
     with container.expander(_('Raw data')):
@@ -215,12 +198,11 @@ def prepare_map(container, selected_station_data):
 
 def prepare_yearly_median(container, daily_measurements):
     container.header(_('📊 Yearly Median'))
-    # calculate the yearly median for the daily measurements
-    daily_measurements['year'] = daily_measurements.index.year
-    yearly_median = daily_measurements.groupby('year')['TMK'].median().rename('yearly_median')
-    # create a line chart for the yearly median
+    yearly_median = dwd_provider.calculate_yearly_median(daily_measurements)
     container.line_chart(yearly_median, x_label=_('Years'), y_label=_('Temperature °C'), use_container_width=True)
     with container.expander(_('Raw data')):
+        # display the daily measurements data as a table
+        st.write(_('Yearly median of daily average temperature'))
         st.dataframe(yearly_median.reset_index(), use_container_width=True)
 
 

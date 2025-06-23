@@ -197,6 +197,15 @@ def get_cloudiness_type(value):
     }
     return cloudiness_types[round(value, 0)]
 
+
+def calculate_measurements_for_today_and_yesterday(daily_measurements, selected_date):
+    # filter the daily measurements data based on the selected date
+    todays_measurements = daily_measurements[daily_measurements.index.date == selected_date]
+    yesterdays_measurements = daily_measurements[daily_measurements.index.date == selected_date - pd.Timedelta(days=1)]
+    return todays_measurements, yesterdays_measurements
+
+
+def count_heat_days_per_year(df, start_year, end_year):
     """
     Count the number of heat days (days with maximum temperature >= 30°C)
     in the DataFrame.
@@ -209,7 +218,9 @@ def get_cloudiness_type(value):
     heatdays_data = heatdays_data.groupby('year').size().rename('heatdays')
     tropicalnights_data = df[df['TNK'] >= 20]
     tropicalnights_data = tropicalnights_data.groupby('year').size().rename('tropicalnights')
-    return heatdays_data.to_frame().join(desertdays_data).join(tropicalnights_data).fillna(0)
+    heat_days_calculations= heatdays_data.to_frame().join(desertdays_data).join(tropicalnights_data).fillna(0)
+    heat_days_calculations = heat_days_calculations[(heat_days_calculations.index >= start_year) & (heat_days_calculations.index <= end_year)]
+    return heat_days_calculations
 
 
 def count_summer_days_per_year(df):
@@ -228,6 +239,32 @@ def count_tropical_nights_per_year(df):
     """
     df['year'] = df.index.year
     return df[df['TNK'] >= 20].groupby('year').size()
+
+
+def calculate_temperatures_for_this_day_over_years(daily_measurements, month, day):
+    # extract only necessary columns from daily measurements
+    this_day_in_year_measurements = daily_measurements[['TNK', 'TMK', 'TXK']]
+    # filter the daily measurements data based on the selected date
+    this_day_in_year_measurements = this_day_in_year_measurements[(daily_measurements.index.month == month) & (daily_measurements.index.day == day)]
+    #if this_day_in_year_measurements.empty:
+    #    container.write(f'No data available for {selected_date}.')
+    #    return
+    xx = {
+        ' TNK': _('Daily minimum'),
+        ' TMK': _('Daily mean'),
+        ' TXK': _('Daily maximum')
+    }
+    this_day_in_year_measurements= this_day_in_year_measurements.rename(columns=xx)
+    return this_day_in_year_measurements
+
+
+def calculate_yearly_median(daily_measurements, start_year, end_year):
+    # calculate the yearly median for the daily measurements
+    daily_measurements['year'] = daily_measurements.index.year
+    yearly_median = daily_measurements.groupby('year')['TMK'].median().rename('yearly_median')
+    yearly_median = yearly_median[(yearly_median.index >= start_year) & (yearly_median.index <= end_year)]
+    return yearly_median
+
 
 
 def main():
