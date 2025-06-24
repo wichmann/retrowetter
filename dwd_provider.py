@@ -31,10 +31,7 @@ class DWDDataFile:
     file_url: str
 
 
-# URLs for the DWD data
-stations_list_url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/KL_Tageswerte_Beschreibung_Stationen.txt'
-measurements_data_url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/tageswerte_KL_00078_19610101_20241231_hist.zip'
-monthly_avergages_url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/monatswerte_KL_00078_19610101_20241231_hist.zip'
+DO_GET_MONTHLY_AVERAGES = False
 
 
 def download_file(url):
@@ -64,7 +61,7 @@ def read_stations_list():
 
 
 def read_daily_measurements_data(data_files, station_id):
-    print(f'Reading measurements data for station {station_id}...')
+    print(f'Reading daily measurements data for station {station_id}...')
     data_url = None
     file_in_zip = None
     for k, v in data_files.items():
@@ -79,17 +76,27 @@ def read_daily_measurements_data(data_files, station_id):
         return pd.DataFrame()
 
 
-def read_monthly_averages_data():
-    monthly_file = download_file(monthly_avergages_url)
-    return read_csv_from_zip(monthly_file, 'produkt_klima_monat_19610101_20241231_00078.txt')
+def read_monthly_averages_data(data_files, station_id):
+    print(f'Reading monthly measurements data for station {station_id}...')
+    data_url = None
+    file_in_zip = None
+    for k, v in data_files.items():
+        if v[0].station_id == station_id:
+            data_url = v[0].file_url
+            file_in_zip = f'produkt_klima_monat_{v[0].start_date}_{v[0].end_date}_{v[0].station_id}.txt'
+            break
+    if data_url and file_in_zip:
+        measurements_file = download_file(data_url)
+        return read_csv_from_zip(measurements_file, file_in_zip)
+    else:
+        return pd.DataFrame()
 
 
-def get_list_of_data_files():
-    """Fetches data files from the DWD website."""    
-    url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/'
-    regex = r'^tageswerte_KL_(\d{5})_(\d{8})_(\d{8})_hist\.zip'
+def get_list_of_data_files(base_url):
+    """Fetches data files from the DWD website."""
+    regex = r'^(tageswerte|monatswerte)_KL_(\d{5})_(\d{8})_(\d{8})_hist\.zip'
     data_files = collections.defaultdict(list)
-    r = requests.get(url)
+    r = requests.get(base_url)
     if r.status_code == 200:
         soup = BeautifulSoup(r.content, 'html.parser')
         links = soup.find_all('a')
@@ -98,15 +105,15 @@ def get_list_of_data_files():
             if href:
                 match = re.match(regex, href)
                 if match:
-                    station_id = match.group(1)
+                    station_id = match.group(2)
                     # Extract the date from the href
-                    start_date = match.group(2)
-                    end_date = match.group(3)
+                    start_date = match.group(3)
+                    end_date = match.group(4)
                     new_file = DWDDataFile(
                         station_id=station_id,
                         start_date=start_date,
                         end_date=end_date,
-                        file_url=url + href
+                        file_url=base_url + href
                     )
                     data_files[station_id].append(new_file)
         return data_files
@@ -120,7 +127,7 @@ def prepare_data(station_id):
     Download weather data from DWD for specific weather station and prepare a
     Pandas DataFrame containing all daily measurements for this station.
     """
-    data_files = get_list_of_data_files()
+    # prepare station id as string with leading zeros and 5 digits
     match station_id:
         case str():
             # station_id is a string but may be not in the correct format
@@ -133,6 +140,14 @@ def prepare_data(station_id):
             station_id = f'{int(station_id):05d}'            
         case _:
             raise ValueError(f"Invalid station_id type: {type(station_id)}. Expected str or int.")
+    # get monthly averages data
+    if DO_GET_MONTHLY_AVERAGES:
+        monthly_base_url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/'
+        data_files = get_list_of_data_files(monthly_base_url)
+        monthly_averages = read_monthly_averages_data(data_files, station_id)
+    # get daily measurements data
+    daily_measurements_url = 'https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/'
+    data_files = get_list_of_data_files(daily_measurements_url)
     daily_measurements = read_daily_measurements_data(data_files, station_id)
     #
     # NM;Tagesmittel des Bedeckungsgrades;Achtel;
