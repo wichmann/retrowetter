@@ -10,6 +10,7 @@ further analysis or processing.
 """
 
 import re
+import gettext
 import zipfile
 import collections
 from io import BytesIO
@@ -32,6 +33,10 @@ class DWDDataFile:
 
 
 DO_GET_MONTHLY_AVERAGES = False
+
+
+# set up translation
+_ = gettext.gettext
 
 
 def download_file(url):
