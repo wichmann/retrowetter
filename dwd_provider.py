@@ -150,16 +150,16 @@ def prepare_data(station_id):
     data_files = get_list_of_data_files(daily_measurements_url)
     daily_measurements = read_daily_measurements_data(data_files, station_id)
     #
-    # NM;Tagesmittel des Bedeckungsgrades;Achtel;
-    # RSK;tgl. Niederschlagshoehe;mm;
-    # RSKF;tgl. Niederschlagsform (=Niederschlagshoehe_ind);numerischer Code;
-    # SHK_TAG;Schneehoehe Tageswert;cm;
-    # TGK;Minimum der Lufttemperatur am Erdboden in 5cm Hoehe;°C;
-    # TMK;Tagesmittel der Temperatur;°C
-    # TNK;Tagesminimum der Lufttemperatur in 2m Hoehe;°C;
-    # TXK;Tagesmaximum der Lufttemperatur in 2m Höhe;°C
-    # UPM;Tagesmittel der Relativen Feuchte;%;
-    # VPM;Tagesmittel des Dampfdruckes;hpa;
+    # NM:      Tagesmittel des Bedeckungsgrades (Achtel)
+    # RSK:     tgl. Niederschlagshoehe (mm)
+    # RSKF:    tgl. Niederschlagsform (=Niederschlagshoehe_ind)
+    # SHK_TAG: Schneehoehe Tageswert (cm)
+    # TGK:     Minimum der Lufttemperatur am Erdboden in 5cm Hoehe (°C)
+    # TMK:     Tagesmittel der Temperatur (°C)
+    # TNK:     Tagesminimum der Lufttemperatur in 2m Hoehe (°C)
+    # TXK:     Tagesmaximum der Lufttemperatur in 2m Höhe (°C)
+    # UPM:     Tagesmittel der Relativen Feuchte (%)
+    # VPM:     Tagesmittel des Dampfdruckes (hpa)
     #
     # set second column as date
     daily_measurements['MESS_DATUM'] = pd.to_datetime(daily_measurements['MESS_DATUM'], format='%Y%m%d')
@@ -167,10 +167,6 @@ def prepare_data(station_id):
     # remove whitespaces from column header
     daily_measurements.rename(columns=lambda x: x.strip(), inplace=True)
     # fill missing values for temperature columns with NaN
-    #  - TGK = Minimum der Lufttemperatur am Erdboden in 5cm Hoehe in °C
-    #  - TMK = Tagesmittel der Temperatur in °C
-    #  - TNK = Tagesminimum der Lufttemperatur in 2m Hoehe in °C
-    #  - TXK = Tagesmaximum der Lufttemperatur in 2m Höhe in °C
     daily_measurements['TXK'] = pd.to_numeric(daily_measurements['TXK'], errors='coerce')
     daily_measurements['TNK'] = pd.to_numeric(daily_measurements['TNK'], errors='coerce')
     daily_measurements['TMK'] = pd.to_numeric(daily_measurements['TMK'], errors='coerce')
