@@ -1,0 +1,30 @@
+[project]
+name = "RetroWetter"
+version = "0.1.0"
+description = "A simple app to visualize weather data to show climate trends."
+authors = [
+    {name = "Christian Wichmann", email = "wichmann@bbs-os-brinkstr.de"},
+]
+dependencies = [
+    "pandas",
+    "matplotlib",
+    "requests",
+    "plotly",
+    "babel",
+    "beautifulsoup4",
+    "scikit-learn",
+    "streamlit",
+]
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+license-files = ["LICENSE"]
+keywords = ["visualization", "python", "weather", "climate", "plotly", "pandas", "webapp", "streamlit"]
+
+[project.urls]
+Homepage = "https://retrowetter.de"
+Documentation = "https://github.com/wichmann/retrowetter/blob/main/README.md"
+Repository = "https://github.com/wichmann/retrowetter"
+
+[tool.pdm]
+distribution = false
