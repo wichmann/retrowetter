@@ -235,14 +235,16 @@ More information about the DWD can be found on their [homepage](https://www.dwd.
     selected_station_data = prepare_station_selection()
     daily_measurements = get_station_data(selected_station_data)
     selected_date, year_range = prepare_time_selection(daily_measurements)
-    daily_measurements = dwd_provider.filter_dataframe_by_year(daily_measurements, year_range[0], year_range[1])
+    # create a copy of the daily measurements dataframe for the filtered data
+    # source: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+    filtered_daily_measurements = dwd_provider.filter_dataframe_by_year(daily_measurements, year_range[0], year_range[1]).copy()
     maincol1, maincol2 = st.columns([1,1], gap='medium')
     prepare_todays_measurements(maincol1, daily_measurements, selected_date)
-    prepare_this_day_over_years(maincol1, daily_measurements, selected_date)
+    prepare_this_day_over_years(maincol1, filtered_daily_measurements, selected_date)
     prepare_map(maincol1, selected_station_data)
-    prepare_yearly_median(maincol2, daily_measurements)
-    prepare_heat_days(maincol2, daily_measurements)
-    prepare_rainfall_in_month_over_the_years(maincol2, daily_measurements, selected_date)
+    prepare_yearly_median(maincol2, filtered_daily_measurements)
+    prepare_heat_days(maincol2, filtered_daily_measurements)
+    prepare_rainfall_in_month_over_the_years(maincol2, filtered_daily_measurements, selected_date)
 
 
 if __name__ == "__main__":
