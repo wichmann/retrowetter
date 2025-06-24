@@ -26,6 +26,8 @@ COPY data/stations.csv /app/data/
 COPY README.md /app/
 COPY LICENSE /app/
 COPY pyproject.toml /app/
+COPY locales/de_DE/LC_MESSAGES/messages.po /app/locales/de_DE/LC_MESSAGES/messages.po
+COPY locales/en_US/LC_MESSAGES/messages.po /app/locales/en_US/LC_MESSAGES/messages.po
 
 RUN pip3 install -r requirements.txt
 
