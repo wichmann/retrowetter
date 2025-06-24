@@ -14,6 +14,8 @@ import gettext
 import zipfile
 import collections
 from io import BytesIO
+from pathlib import Path
+from zipfile import ZipFile
 from dataclasses import dataclass
 
 import requests
@@ -32,6 +34,7 @@ class DWDDataFile:
     file_url: str
 
 
+CACHE_DIR = 'cache'
 DO_GET_MONTHLY_AVERAGES = False
 
 
@@ -39,12 +42,30 @@ DO_GET_MONTHLY_AVERAGES = False
 _ = gettext.gettext
 
 
+class DWDProviderException(Exception):
+    """Custom exception for DWDProvider errors."""
+
+
 def download_file(url):
-    response = requests.get(url)
+    """
+    Downloads a file from the given URL and caches it locally. If the file
+    already exists in the cache, it uses the cached version.
+    """
+    filename = Path(url).name
+    cache_path = Path(CACHE_DIR)
+    # create cache directory if it does not exist
+    cache_path.mkdir(parents=True, exist_ok=True)
+    file_path = cache_path / filename
+    if file_path.exists():
+        print(f'Using cached file: {file_path}')
+        return BytesIO(file_path.read_bytes())
+    response = requests.get(url, timeout=5)
     if response.status_code == 200:
+        # write the file to cache
+        with open(file_path, 'wb') as f:
+            f.write(response.content)        
         return BytesIO(response.content)
-    else:
-        raise Exception(f"Failed to download file from {url}")
+    raise DWDProviderException(f'Failed to download file from {url}')
 
 
 def read_csv_from_zip(zip_file, filename):
