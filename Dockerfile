@@ -33,8 +33,6 @@ RUN pip3 install -r requirements.txt
 
 # run pybabel to generate .mo files for translations
 RUN pybabel compile -d locales
-COPY locales/de_DE/LC_MESSAGES/messages.mo /app/locales/de_DE/LC_MESSAGES/messages.mo
-COPY locales/en_US/LC_MESSAGES/messages.mo /app/locales/en_US/LC_MESSAGES/messages.mo
 
 EXPOSE 8501
 
