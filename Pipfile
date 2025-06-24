@@ -7,14 +7,12 @@ name = "pypi"
 pandas = "*"
 matplotlib = "*"
 requests = "*"
-wetterdienst = {extras = ["plotting"], version = "*"}
-dash = "*"
 plotly = "*"
-streamlit = "*"
 babel = "*"
 beautifulsoup4 = "*"
-statsmodels = "*"
 scikit-learn = "*"
+kaleido = "*"
+streamlit = "*"
 
 [dev-packages]
 
