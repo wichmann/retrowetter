@@ -18,17 +18,21 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
+# copy all necessary files into the image
 COPY app.py /app/
 COPY dwd_provider.py /app/
 COPY requirements.txt /app/
 COPY data/stations.csv /app/data/
-COPY locales/de_DE/LC_MESSAGES/messages.mo /app/locales/de_DE/LC_MESSAGES/messages.mo
-COPY locales/en_US/LC_MESSAGES/messages.mo /app/locales/en_US/LC_MESSAGES/messages.mo
 COPY README.md /app/
 COPY LICENSE /app/
 COPY pyproject.toml /app/
 
 RUN pip3 install -r requirements.txt
+
+# run pybabel to generate .mo files for translations
+RUN pybabel compile -d locales
+COPY locales/de_DE/LC_MESSAGES/messages.mo /app/locales/de_DE/LC_MESSAGES/messages.mo
+COPY locales/en_US/LC_MESSAGES/messages.mo /app/locales/en_US/LC_MESSAGES/messages.mo
 
 EXPOSE 8501
 
