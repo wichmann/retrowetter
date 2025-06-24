@@ -20,19 +20,15 @@ import dwd_provider
 APP_TITLE = 'RetroWetter'
 
 
+# set up locale for date formatting
+locale = babel.core.Locale.parse(st.context.locale, sep='-')
+
 # set up translation
 _ = gettext.gettext
 language = st.sidebar.selectbox(_('Select language'), ['de', 'en'])
-try:
-  localizator = gettext.translation('messages', localedir='locales', languages=[language])
-  localizator.install()
-  _ = localizator.gettext 
-except:
-    pass
-
-
-# set up locale for date formatting
-locale = babel.core.Locale.parse(st.context.locale, sep='-')
+localizator = gettext.translation('messages', localedir='locales', languages=[language])
+localizator.install()
+_ = localizator.gettext
 
 
 @st.cache_data
@@ -81,7 +77,7 @@ def prepare_time_selection(daily_measurements):
         value=(int(daily_measurements.index.year.min()), int(daily_measurements.index.year.max())),
         step=1
     )
-    # create input fields to select a specific date  
+    # create input fields to select a specific date
     st.sidebar.subheader(_('Select Specific Date'))
     st.sidebar.write(_('Select a specific date to view that days weather.'))
     selected_date = st.sidebar.date_input(
@@ -133,7 +129,7 @@ def prepare_todays_measurements(container, daily_measurements, selected_date):
         col3.metric(_('Cloud amount'), f"{dwd_provider.get_cloudiness_type(todays_nm)}", f"{dwd_provider.get_cloudiness_type(yesterdays_nm)}", border=True)
 
 
-def prepare_heat_days(container, daily_measurements):    
+def prepare_heat_days(container, daily_measurements):
     container.header(_('🥵 Heat Days per Year'))
     container.write(_('Heat Days Data (Days with Maximum Temperature >= 30°C)'))
     heat_days = dwd_provider.calculate_heat_days_per_year(daily_measurements)
@@ -159,16 +155,16 @@ def create_heat_days_chart(heat_days):
     fig.add_trace(go.Scatter(x=heat_days.index, y=create_trend(heat_days, 'heatdays'), mode='lines',
                              name=_('heat days trend'), marker_color='indianred'))
     fig.update_layout(xaxis_title=_('Year'), yaxis_title=_('Number of days'),
-                    legend=dict(orientation='h', y=1.1), barmode='overlay')
+                      legend=dict(orientation='h', y=1.1), barmode='overlay')
     return fig
 
 
 def create_trend(df, column_name):
     model = LinearRegression()
-    X = df.index.values.reshape(-1, 1)
-    Y = df[[column_name]].values
-    model.fit(X, Y)
-    predicted_y = model.predict(X)
+    x_values = df.index.values.reshape(-1, 1)
+    y_values = df[[column_name]].values
+    model.fit(x_values, y_values)
+    predicted_y = model.predict(x_values)
     #heat_data[f'{column_name}trend'] = model.predict(X)
     predicted_y = predicted_y.flatten()
     return predicted_y

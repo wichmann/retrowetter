@@ -11,12 +11,11 @@ further analysis or processing.
 
 import re
 import gettext
-import zipfile
-import collections
 from io import BytesIO
 from pathlib import Path
 from zipfile import ZipFile
 from dataclasses import dataclass
+from collections import defaultdict
 
 import requests
 import numpy as np
@@ -69,9 +68,9 @@ def download_file(url):
 
 
 def read_csv_from_zip(zip_file, filename):
-    with zipfile.ZipFile(zip_file) as z:
+    with ZipFile(zip_file) as z:
         with z.open(filename) as f:
-            return pd.read_csv(f, sep=';', encoding='latin1', low_memory=False)
+            return pd.read_csv(f, sep=';', encoding='utf-8', low_memory=False)
 
 
 def read_stations_list():
@@ -90,7 +89,7 @@ def read_daily_measurements_data(data_files, station_id):
     print(f'Reading daily measurements data for station {station_id}...')
     data_url = None
     file_in_zip = None
-    for k, v in data_files.items():
+    for _, v in data_files.items():
         if v[0].station_id == station_id:
             data_url = v[0].file_url
             file_in_zip = f'produkt_klima_tag_{v[0].start_date}_{v[0].end_date}_{v[0].station_id}.txt'
@@ -98,15 +97,14 @@ def read_daily_measurements_data(data_files, station_id):
     if data_url and file_in_zip:
         measurements_file = download_file(data_url)
         return read_csv_from_zip(measurements_file, file_in_zip)
-    else:
-        return pd.DataFrame()
+    return pd.DataFrame()
 
 
 def read_monthly_averages_data(data_files, station_id):
     print(f'Reading monthly measurements data for station {station_id}...')
     data_url = None
     file_in_zip = None
-    for k, v in data_files.items():
+    for _, v in data_files.items():
         if v[0].station_id == station_id:
             data_url = v[0].file_url
             file_in_zip = f'produkt_klima_monat_{v[0].start_date}_{v[0].end_date}_{v[0].station_id}.txt'
@@ -114,15 +112,14 @@ def read_monthly_averages_data(data_files, station_id):
     if data_url and file_in_zip:
         measurements_file = download_file(data_url)
         return read_csv_from_zip(measurements_file, file_in_zip)
-    else:
-        return pd.DataFrame()
+    return pd.DataFrame()
 
 
 def get_list_of_data_files(base_url):
     """Fetches data files from the DWD website."""
     regex = r'^(tageswerte|monatswerte)_KL_(\d{5})_(\d{8})_(\d{8})_hist\.zip'
-    data_files = collections.defaultdict(list)
-    r = requests.get(base_url)
+    data_files = defaultdict(list)
+    r = requests.get(base_url, timeout=5)
     if r.status_code == 200:
         soup = BeautifulSoup(r.content, 'html.parser')
         links = soup.find_all('a')
@@ -143,9 +140,8 @@ def get_list_of_data_files(base_url):
                     )
                     data_files[station_id].append(new_file)
         return data_files
-    else:
-        print(f"Failed to retrieve data: {r.status_code}")
-        return {}
+    print(f"Failed to retrieve data: {r.status_code}")
+    return {}
 
 
 def prepare_data(station_id):
@@ -163,7 +159,7 @@ def prepare_data(station_id):
             station_id = f'{station_id:05d}'
         case np.int64():
             # station_id is a numpy int64, convert to string and pad with zeros
-            station_id = f'{int(station_id):05d}'            
+            station_id = f'{int(station_id):05d}'
         case _:
             raise ValueError(f"Invalid station_id type: {type(station_id)}. Expected str or int.")
     # get monthly averages data
@@ -208,7 +204,7 @@ def filter_dataframe_by_year(daily_measurements, start_year, end_year):
 
 
 def check_if_value_is_valid(value):
-    return value != 0 and value != -999
+    return value not in (0, -999)
 
 
 def get_rain_type(value):
