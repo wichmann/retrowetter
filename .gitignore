@@ -197,3 +197,6 @@ pyrightconfig.json
 ### Project Specific ###
 misc/
 cache/
+.pdm-python
+data/stations.ods
+data/stations.txt

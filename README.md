@@ -11,7 +11,7 @@ More information about the DWD can be found on their [homepage](https://www.dwd.
 ## Build
 Run app for development:
 
-    pipenv run streamlit run app.py
+    streamlit run app.py
 
 Build Docker container for development:
 
@@ -20,13 +20,13 @@ Build Docker container for development:
 
 Update and create translation files:
 
-    pipenv run pybabel extract . -o locales/base.pot
+    pybabel extract . -o locales/base.pot
     pybabel init -l de_DE en_US -i locales/base.pot -d locales
     pybabel update -i locales/base.pot -d locales
     pybabel compile -d locales
 
 ## Todo
-- Reimplement with Dash (https://dash.plotly.com/minimal-app) to compare with Steamlit.
+- Reimplement with Dash (https://dash.plotly.com/minimal-app) to compare with Streamlit.
 - Use Bokeh for plots.
 - Run app directly in browser with PyScript (https://pyscript.com/@examples/bokeh/latest).
 
