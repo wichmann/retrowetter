@@ -45,7 +45,7 @@ msgstr "Wählen Sie eine Wetterstation..."
 
 #: app.py:75 app.py:78
 msgid "Select Year Range"
-msgstr "Wählen Sie einen Zeitraum"
+msgstr "Zeitraum auswählen"
 
 #: app.py:76
 msgid "Select a year range to view weather data."
@@ -53,7 +53,7 @@ msgstr "Wählen Sie eine Zeitraum, für den Wetterdaten angezeigt werden sollen.
 
 #: app.py:85
 msgid "Select Specific Date"
-msgstr "Wählen Sie ein bestimmtes Datum"
+msgstr "Datum auswählen"
 
 #: app.py:86
 msgid "Select a specific date to view that days weather."

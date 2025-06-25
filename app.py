@@ -54,7 +54,6 @@ def prepare_sidebar():
 def prepare_station_selection():
     # create a dropdown to select a station
     st.sidebar.subheader(_('Select Station'))
-    st.sidebar.write(_('Select a weather station by name.'))
     station_options = get_station_list()
     selected_station = st.sidebar.selectbox(
         label=_('Select weather station...'),
@@ -69,7 +68,6 @@ def prepare_station_selection():
 def prepare_time_selection(daily_measurements):
     # create a double slider to select a range of years
     st.sidebar.subheader(_('Select Year Range'))
-    st.sidebar.write(_('Select a year range to view weather data.'))
     year_range = st.sidebar.slider(
         _('Select Year Range'),
         min_value=int(daily_measurements.index.year.min()),
@@ -79,7 +77,6 @@ def prepare_time_selection(daily_measurements):
     )
     # create input fields to select a specific date
     st.sidebar.subheader(_('Select Specific Date'))
-    st.sidebar.write(_('Select a specific date to view that days weather.'))
     selected_date = st.sidebar.date_input(
         _('Select Date'),
         value=daily_measurements.index[-1].date(),
@@ -217,7 +214,7 @@ provided under the Creative Commons licence CC BY 4.0 as stated in the
 [legal notices](https://www.dwd.de/EN/service/legal_notice/legal_notice.html).
 More information about the DWD can be found on their [homepage](https://www.dwd.de/).""")
     st.set_page_config(
-        page_title='',
+        page_title='APP_TITLE',
         page_icon='☀️',
         layout='wide',
         initial_sidebar_state='expanded',
