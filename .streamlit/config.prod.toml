@@ -95,7 +95,7 @@ font = "Ubuntu,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Ne
 # - The `family` value for a custom font table under [[theme.fontFaces]]
 # - A comma-separated list of these (as a single string) to specify
 # fallbacks
-headingFont = font = "Ubuntu,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif"
+headingFont = "Ubuntu,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif"
 
 # An array of fonts to use in your app.
 # 
