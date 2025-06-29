@@ -23,6 +23,7 @@ COPY app.py /app/
 COPY dwd_provider.py /app/
 COPY requirements.txt /app/
 COPY data/stations.csv /app/data/
+COPY .streamlit/config.prod.toml /app/.streamlit/config.toml
 COPY README.md /app/
 COPY LICENSE /app/
 COPY pyproject.toml /app/

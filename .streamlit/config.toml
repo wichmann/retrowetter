@@ -1,0 +1,287 @@
+[logger]
+# Level of logging for Streamlit's internal logger: "error", "warning",
+# "info", or "debug".
+# 
+# Default: "info"
+# level = "info"
+
+# String format for logging messages. If logger.datetimeFormat is set,
+# logger messages will default to `%(asctime)s.%(msecs)03d %(message)s`.
+# 
+# See Python's documentation for available attributes:
+# https://docs.python.org/3/library/logging.html#formatter-objects
+# 
+# Default: "%(asctime)s %(message)s"
+# messageFormat = "%(asctime)s %(message)s"
+
+[client]
+showErrorDetails = "full"
+
+[server]
+# The port where the server will listen for browser connections.
+# 
+# Default: 8501
+# port = 8501
+
+[browser]
+# Whether to send usage statistics to Streamlit.
+# 
+# Default: true
+# 
+# The value below was set in /media/data/Programmierung/python/dwd/.streamlit/config.toml
+gatherUsageStats = false
+
+[theme]
+# The preset Streamlit theme that your custom theme inherits from.
+# 
+# This can be one of the following: "light" or "dark".
+# base =
+
+# Primary accent color.
+primaryColor = "#f25353"
+
+# Background color of the app.
+# backgroundColor =
+
+# Background color used for most interactive widgets.
+# secondaryBackgroundColor =
+
+# Color used for almost all text.
+textColor = "#222222"
+
+# Color used for all links.
+# linkColor =
+
+# Background color used for code blocks.
+# codeBackgroundColor =
+
+# The font family for all text, except code blocks.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+# 
+font = "Ubuntu,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif"
+
+# The font family to use for code (monospace) in the sidebar.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+# codeFont =
+
+# Sets the font size (in pixels or rem) for code blocks and code text.
+# 
+# This applies to code blocks (ex: `st.code`), as well as font in `st.json` and `st.help`.
+# It does not apply to inline code, which is set by default to 0.75em.
+# 
+# When unset, the code font size will be 0.875rem.
+# codeFontSize =
+
+# The font family to use for headings.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+headingFont = font = "Ubuntu,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif"
+
+# An array of fonts to use in your app.
+# 
+# Each font in the array is a table (dictionary) that can have the
+# following attributes, closely resembling CSS font-face definitions:
+# - family
+# - url
+# - weight (optional)
+# - style (optional)
+# - unicodeRange (optional)
+# 
+# To host a font with your app, enable static file serving with
+# `server.enableStaticServing=true`.
+# 
+# You can define multiple [[theme.fontFaces]] tables, including multiple
+# tables with the same family if your font is defined by multiple files.
+# 
+# For example, a font hosted with your app may have a [[theme.fontFaces]]
+# table as follows:
+# 
+# [[theme.fontFaces]]
+# family = "font_name"
+# url = "app/static/font_file.woff"
+# weight = "400"
+# style = "normal"
+# fontFaces =
+
+# The radius used as basis for the corners of most UI elements.
+# 
+# This can be one of the following:
+# - "none"
+# - "small"
+# - "medium"
+# - "large"
+# - "full"
+# - The number in pixels or rem.
+# 
+# For example, you can use "10px", "0.5rem", or "2rem". To follow best
+# practices, use rem instead of pixels when specifying a numeric size.
+# baseRadius =
+
+# The radius used as basis for the corners of buttons.
+# 
+# This can be one of the following:
+# - "none"
+# - "small"
+# - "medium"
+# - "large"
+# - "full"
+# - The number in pixels or rem.
+# 
+# For example, you can use "10px", "0.5rem", or "2rem". To follow best
+# practices, use rem instead of pixels when specifying a numeric size.
+# 
+# If no button radius is set, Streamlit uses `theme.baseRadius` instead.
+# buttonRadius =
+
+# The color of the border around elements.
+# borderColor =
+
+# The color of the border around dataframes and tables.
+# 
+# If no dataframe border color is set, Streamlit uses `theme.borderColor`
+# instead.
+# dataframeBorderColor =
+
+# Whether to show a border around input widgets.
+# showWidgetBorder =
+
+# Sets the root font size (in pixels) for the app.
+# 
+# This determines the overall scale of text and UI elements.
+# 
+# When unset, the font size will be 16px.
+# baseFontSize =
+
+# Whether to show a vertical separator between the sidebar and the main
+# content area.
+# showSidebarBorder =
+
+
+[theme.sidebar]
+
+# Primary accent color.
+# primaryColor =
+
+# Background color of the app.
+# backgroundColor =
+
+# Background color used for most interactive widgets.
+# secondaryBackgroundColor =
+
+# Color used for almost all text.
+# textColor =
+
+# Color used for all links.
+# linkColor =
+
+# Background color used for code blocks.
+# codeBackgroundColor =
+
+# The font family for all text, except code blocks.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+# 
+# For example, you can use the following:
+# 
+# font = "cool-font, fallback-cool-font, sans-serif"
+# font =
+
+# The font family to use for code (monospace) in the sidebar.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+# codeFont =
+
+# Sets the font size (in pixels or rem) for code blocks and code text.
+# 
+# This applies to code blocks (ex: `st.code`), as well as font in `st.json` and `st.help`.
+# It does not apply to inline code, which is set by default to 0.75em.
+# 
+# When unset, the code font size will be 0.875rem.
+# codeFontSize =
+
+# The font family to use for headings.
+# 
+# This can be one of the following:
+# - "sans-serif"
+# - "serif"
+# - "monospace"
+# - The `family` value for a custom font table under [[theme.fontFaces]]
+# - A comma-separated list of these (as a single string) to specify
+# fallbacks
+# 
+# If no heading font is set, Streamlit uses `theme.font` for headings.
+# headingFont =
+
+# The radius used as basis for the corners of most UI elements.
+# 
+# This can be one of the following:
+# - "none"
+# - "small"
+# - "medium"
+# - "large"
+# - "full"
+# - The number in pixels or rem.
+# 
+# For example, you can use "10px", "0.5rem", or "2rem". To follow best
+# practices, use rem instead of pixels when specifying a numeric size.
+# baseRadius =
+
+# The radius used as basis for the corners of buttons.
+# 
+# This can be one of the following:
+# - "none"
+# - "small"
+# - "medium"
+# - "large"
+# - "full"
+# - The number in pixels or rem.
+# 
+# For example, you can use "10px", "0.5rem", or "2rem". To follow best
+# practices, use rem instead of pixels when specifying a numeric size.
+# 
+# If no button radius is set, Streamlit uses `theme.baseRadius` instead.
+# buttonRadius =
+
+# The color of the border around elements.
+# borderColor =
+
+# The color of the border around dataframes and tables.
+# 
+# If no dataframe border color is set, Streamlit uses `theme.borderColor`
+# instead.
+# dataframeBorderColor =
+
+# Whether to show a border around input widgets.
+# showWidgetBorder =
