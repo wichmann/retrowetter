@@ -214,7 +214,7 @@ provided under the Creative Commons licence CC BY 4.0 as stated in the
 [legal notices](https://www.dwd.de/EN/service/legal_notice/legal_notice.html).
 More information about the DWD can be found on their [homepage](https://www.dwd.de/).""")
     st.set_page_config(
-        page_title='APP_TITLE',
+        page_title=APP_TITLE,
         page_icon='☀️',
         layout='wide',
         initial_sidebar_state='expanded',
